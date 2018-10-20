@@ -5,7 +5,9 @@
 class AdminComponent {
 
     constructor(id){
-        this.id = id;
+        this._id = id;
+        this._html = null;
+        this._listComponents = [];
 
 
     }
@@ -14,8 +16,11 @@ class AdminComponent {
 
     }
 
+    
+
     getId(){
 
+        return this._id;
     }
 
     setId(){
@@ -27,8 +32,11 @@ class AdminComponent {
     }
 
     attachComponent(componentParent, componentChild){
+        console.log(componentParent._html);
+        
+        componentParent._html.appendChild(componentChild._html);
 
-        componentParent.appendChild(componentChild);
+        this._listComponents.push(componentChild);
 
     }
 

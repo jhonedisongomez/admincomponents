@@ -8,25 +8,22 @@ class InputComponent extends AdminComponent {
     constructor(id, label, placeholder, required){
         super(id)
         this._id = id;
-        this._component = null;
+        this._html = null;
         this._label = label;
         this._placeholder = placeholder;
         this._required = required;
-        this._message = '';
         this._inputLabel = null;
 
         this._constructComponent();
     }
 
-    getComponent(){
-        return this._component;
-    }
-
     isValid(){
 
-        if(this.required){
-            if(this.children[1].value == ''){
+        if(this._required){
+            if(this._html.children[1].value == ''){
+                this._html.classList.add('has-error');
                 return false;
+                
             }else{
                 return true;
             }
@@ -36,16 +33,19 @@ class InputComponent extends AdminComponent {
         
     }
 
-    setMessage(message){
-        this._message.innerHTML = message;
+    setErrorMessage(message){
+
+        this._html.classList.add('has-error');
+        this._html.children[1].focus();
+        this._html.children[2].innerHTML = message;
     }
 
 
     _constructComponent(){
 
-        this._component = document.createElement('div');
-        this._component.id = this._id;
-        this._component.classList.add('form-group');
+        this._html = document.createElement('div');
+        this._html.id = this._id;
+        this._html.classList.add('form-group');
 
         this._inputLabel = document.createElement('label');
         this._inputLabel.classList.add('control-label');
@@ -58,9 +58,9 @@ class InputComponent extends AdminComponent {
         this._message = document.createElement('span');
         this._message.classList.add('help-block');
 
-        this._component.appendChild(this._inputLabel);
-        this._component.appendChild(input);
-        this._component.appendChild(this._message);
+        this._html.appendChild(this._inputLabel);
+        this._html.appendChild(input);
+        this._html.appendChild(this._message);
 
     }
 

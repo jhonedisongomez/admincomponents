@@ -16,11 +16,16 @@
 
 <script src="/dist/AdminComponent.js"></script>
 <script src="/dist/InputComponent.js"></script>
+<script src="/dist/FormComponent.js"></script>
 
 <script>
 
+    var form = new FormComponent('prueba');
     var input = new InputComponent('hello', 'prueba', '', true);
-    document.body.appendChild(input.getComponent());
+    form.attachComponent(form, input);
+    
+    document.body.appendChild(form._html);
+    form.submit();
 
 
 </script>
