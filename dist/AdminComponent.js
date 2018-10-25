@@ -32,12 +32,18 @@ class AdminComponent {
     }
 
     attachComponent(componentParent, componentChild){
-        console.log(componentParent._html);
-        
         componentParent._html.appendChild(componentChild._html);
-
         this._listComponents.push(componentChild);
 
+    }
+
+    requestAjax(url, data, callback){
+        $.ajax({
+
+            url:url,
+            data: data,
+            
+        }).done(callback);
     }
 
 

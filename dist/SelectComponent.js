@@ -6,6 +6,7 @@
 class SelectComponent extends AdminComponent{
 
     constructor(id,label, options,required){
+        super(id);
         this._id = id;
         this._options = options
         this._label = label;
@@ -23,7 +24,9 @@ class SelectComponent extends AdminComponent{
         this._html.children[2].innerHTML = message;
     }
 
-    setOption(){
+    setOption(value, name, index){
+        var select = this._html.children[1];
+        select.options[index] = new Option(value, name);
 
     }
 
@@ -58,6 +61,28 @@ class SelectComponent extends AdminComponent{
         }
     }
 
+    loadOptions(url,data){
+
+        $.ajax({
+            url: url,
+            data: data,
+            succes:function(response){
+
+                if(response.is_error){
+                    alert('Error load de options');
+                }else{
+                    var options = response.options;
+
+                    for(var i = 0; i < options.length; i++){
+                        
+                        option = new Option(options[i].nombre, options[i].codigo);
+                    }
+                }
+
+            }
+        })
+    }
+
     _constructComponent(){
 
         var divSelect = document.createElement('div');
@@ -67,7 +92,8 @@ class SelectComponent extends AdminComponent{
         label.innerHTML = this._label;
 
         var select = document.createElement('select');
-        select.classList.add('form-group');
+        select.classList.add('form-control');
+        select.name = this._id;
 
         var span = document.createElement('span');
 

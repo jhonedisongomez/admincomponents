@@ -22,9 +22,13 @@ class InputComponent extends AdminComponent {
         if(this._required){
             if(this._html.children[1].value == ''){
                 this._html.classList.add('has-error');
+                this._html.children[1].focus();
+                this._html.children[2].innerHTML = 'El valor del campo ' + this._label + ' no puede estar nulo o vacio.';
                 return false;
                 
             }else{
+                this._html.children[2].innerHTML = '';
+                this._html.classList.remove('has-error');
                 return true;
             }
         }else{
@@ -32,15 +36,6 @@ class InputComponent extends AdminComponent {
         }
         
     }
-
-    setErrorMessage(message){
-
-        this._html.classList.add('has-error');
-        this._html.children[1].focus();
-        this._html.children[2].innerHTML = message;
-    }
-
-
     _constructComponent(){
 
         this._html = document.createElement('div');
@@ -51,9 +46,10 @@ class InputComponent extends AdminComponent {
         this._inputLabel.classList.add('control-label');
         this._inputLabel.innerHTML = this._label;
 
-        input = document.createElement('input');
+        var input = document.createElement('input');
         input.classList.add('form-control');
         input.placeholder = this._placeholder;
+        input.name = this._id;
 
         this._message = document.createElement('span');
         this._message.classList.add('help-block');

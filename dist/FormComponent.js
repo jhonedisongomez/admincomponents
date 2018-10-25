@@ -16,17 +16,16 @@
         return this._form;
     }
 
-    submit(url, type, callback){
-        var data = {};
+    submit(url, type,data, callback){
         
         if(this.isValid()){
-        
-
+            var formdata = $('#'+ this._id ).serialize();
+            
             //TODO: send the elements ajax
             $.ajax({
 
                 url: url,
-                data : data,
+                data : formdata +  data,
                 type: type,
                 success: callback
 
@@ -54,7 +53,9 @@
     _constructComponent(){
 
         this._html = document.createElement('form');
+        this._html.id = this._id;
         this._html.classList.add('form-group');
+        
         return this.form;
         
     }
